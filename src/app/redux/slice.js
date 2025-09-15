@@ -1,8 +1,14 @@
 const { createSlice, nanoid, current, createAsyncThunk } = require("@reduxjs/toolkit");
 
+let users = [];
+if (typeof window !== "undefined" && window.localStorage) {
+    const stored = localStorage.getItem("users");
+    users = stored ? JSON.parse(stored) : [];
+}
+
 const initialState = {
-    userAPIData: [],
-    users: JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : []
+        userAPIData: [],
+        users: users
 }
 
 export const fetchApiUsers = createAsyncThunk("fetchApiUsers", async () => {
